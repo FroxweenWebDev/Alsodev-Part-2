@@ -11,9 +11,16 @@
 					<span class="button-auth-svg"></span>
 					<span class="button-text">Войти</span>
 				</button>
-				<button class="button button-cart" @click="toggleCart">
+				<button class="button button-cart" @click="openCartModal">
 					<span class="button-cart-svg"></span>
-					<span class="button-text">Корзина {{ cartItemsLocal }}</span>
+					<span class="button-text">Корзина 
+						<span v-if="cartItems.length === 0">
+						</span>
+						<span v-else>
+								<b>({{ cartItems.length }}) <sup>{{ cartItemsTotal }} ₽</sup></b>
+						</span>
+						
+					</span>
 				</button>
 				<button class="button button-primary button-out">
 					<span class="button-text">Выйти</span>
@@ -22,98 +29,33 @@
 			</div>
 		</header>
 	</div>
-
-	<div class="modal modal-cart" :class="isOpenCart ? 'is-open' : ''">
-		<div class="modal-dialog">
-			<div class="modal-header">
-				<h3 class="modal-title">Корзина</h3>
-				<button class="close" @click="toggleCart">&times;</button>
-			</div>
-			<!-- /.modal-header -->
-			<div class="modal-body">
-				<div class="food-row" v-for="(item, index) in cart" :key="index">
-					<span class="food-name">{{ item.name }}</span>
-					<strong class="food-price">{{ item.price }} ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-				<div class="food-row">
-					<span class="food-name">Ролл угорь стандарт</span>
-					<strong class="food-price">250 ₽</strong>
-					<div class="food-counter">
-						<button class="counter-button">-</button>
-						<span class="counter">1</span>
-						<button class="counter-button">+</button>
-					</div>
-				</div>
-				<!-- /.foods-row -->
-			</div>
-			<!-- /.modal-body -->
-			<div class="modal-footer">
-				<span class="modal-pricetag">1250 ₽</span>
-				<div class="footer-buttons">
-					<router-link to="/cart"><button class="button button-primary" @click="toggleCart">Оформить заказ</button></router-link>
-					<button class="button clear-cart" @:click="clearCart()">Отмена</button>
-				</div>
-
-			</div>
-			<!-- /.modal-footer -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-
-	<div class="modal-auth" :class="isOpenAuth ? 'is-open' : ''">
-		<div class="modal-dialog modal-dialog-auth">
-			<button class="close-auth" @click="toggleAuth">&times;</button>
-			<form id="logInForm">
-				<fieldset class="modal-body">
-					<legend class="modal-title">Авторизация</legend>
-					<label class="label-auth">
-						<span>Логин</span>
-						<input id="login" type="text">
-					</label>
-					<label class="label-auth">
-						<span>Пароль</span>
-						<input id="password" type="password">
-					</label>
-				</fieldset>
-				<!-- /.modal-body -->
-				<div class="modal-footer ">
-					<div class="footer-buttons">
-						<button class="button button-primary button-login" type="submit">Войти</button>
-					</div>
-				</div>
-			</form>
-			<!-- /.modal-footer -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+	<CartModal ref="cartModal" />
 </template>
 
+
+<script>
+
+import { mapState } from 'vuex';
+import CartModal from '@/components/CartComponent.vue';
+
+export default {
+  components: {
+    CartModal
+  },
+  computed: {
+		...mapState(['cartItems']),
+    cartItemsTotal() {
+      return this.cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+    }
+  },
+  methods: {
+    openCartModal() {
+      this.$refs.cartModal.ToggleModalCart(); 
+    }
+  }
+};
+</script>
+<!-- 
 <script>
 // import axios from 'axios';
 
@@ -139,4 +81,4 @@ export default {
 
 	}
 };
-</script>
+</script> -->

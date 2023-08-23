@@ -32,11 +32,11 @@
 		<div class="cart__total">
 			<span class="subtotal">
 				<span>Subtotal</span>
-				<span>{{ total }}</span>
+				<span>{{ total }} ₽</span>
 			</span>
 			<span class="total">
 				<span>TOTAL</span>
-				<span>{{ total }}</span>
+				<span>{{ total }} ₽</span>
 			</span>
 		</div>
 

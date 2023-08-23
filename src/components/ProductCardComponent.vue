@@ -66,10 +66,10 @@ export default {
 	},
   methods: {
 		sortByPriceDecrement() {
-			this.product.sort((a, b) => b.price - a.price);
+			this.products.sort((a, b) => b.price - a.price);
 		},
 		sortByPriceIncrement() {
-			this.product.sort((a, b) => a.price - b.price);
+			this.products.sort((a, b) => a.price - b.price);
 		},
     ...mapMutations(['addToCart'])
   },

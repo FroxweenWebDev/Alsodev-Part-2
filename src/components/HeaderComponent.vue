@@ -7,7 +7,7 @@
 			</label>
 			<div class="buttons">
 				<span class="user-name"></span>
-				<button class="button button-primary button-auth" @click="toggleAuth">
+				<button class="button button-primary button-auth" @click="openAuthModal">
 					<span class="button-auth-svg"></span>
 					<span class="button-text">Войти</span>
 				</button>
@@ -30,6 +30,7 @@
 		</header>
 	</div>
 	<CartModal ref="cartModal" />
+	<AuthModal ref="authModal" />
 </template>
 
 
@@ -37,10 +38,12 @@
 
 import { mapState } from 'vuex';
 import CartModal from '@/components/CartComponent.vue';
+import AuthModal from '@/components/authComponent.vue';
 
 export default {
   components: {
-    CartModal
+		CartModal,
+    AuthModal
   },
   computed: {
 		...mapState(['cartItems']),
@@ -51,34 +54,10 @@ export default {
   methods: {
     openCartModal() {
       this.$refs.cartModal.ToggleModalCart(); 
+    },
+		openAuthModal() {
+      this.$refs.authModal.ToggleModalLogin(); 
     }
   }
 };
 </script>
-<!-- 
-<script>
-// import axios from 'axios';
-
-export default {
-	data() {
-		return {
-			isOpenCart: false,
-			isOpenAuth: false,
-			product: [],
-			url: `../api/${this.$route.params.partnerName}.json`,
-			cart: [],
-		};
-	},
-	methods: {
-		toggleCart() {
-			this.isOpenCart = !this.isOpenCart;
-		},
-		toggleAuth() {
-			this.isOpenAuth = !this.isOpenAuth;
-		},
-	},
-	mounted() {
-
-	}
-};
-</script> -->
